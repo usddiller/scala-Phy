@@ -14,7 +14,7 @@ object SimpleParallelBar extends IOApp.Simple {
   def answerforgemini: IO[Unit] = for {
     _ <- IO.println("и че это все?")
     input <- IO.readLine
-    somequestion = if (input == "нет") "так а херли ты остановился" else "ок"
+    somequestion = if (input == "нет") "так а че ты остановился" else "ок"
     _ <- IO.println(somequestion)
   }yield()
 
