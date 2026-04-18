@@ -59,3 +59,50 @@ def seqIO[A](ls:List[IO[A]]):IO[List[A]] ={
 //  }
 //
 //}
+
+
+//val f1 = Fork(1)
+//val f2 = Fork(2)
+//val f3 = Fork(3)
+//val f4 = Fork(4)
+//val f5 = Fork(5)
+
+//def loop(p1: Phy, p2: Phy, p3: Phy, p4: Phy, p5: Phy): IO[Unit] = {
+//
+//  def check(ph: Phy) = ph.state match {
+//    case Eat => false
+//    case Think => true
+//  }
+//
+//  def checkNs(ph: Phy) = ph.fd match {
+//    case 1 => (check(p2), check(p5))
+//    case 2 => (check(p1), check(p3))
+//    case 3 => (check(p2), check(p4))
+//    case 4 => (check(p3), check(p5))
+//    case 5 => (check(p1), check(p4))
+//  }
+//
+//  def server(ph: Phy) = checkNs(ph) match {
+//    case (true, true) => ph.copy(state = Eat)
+//    case _            => ph.copy(state = Think)
+//  }
+//
+//  for {
+//    _ <- IO.println(s"Статус: 1:${p1.state}, 2:${p2.state}, 3:${p3.state}...")
+//    _ <- IO.sleep(1.second)
+//
+
+//    nextP1 = server(p1)
+//    nextP2 = server(p2)
+//    nextP3 = server(p3)
+//    nextP4 = server(p4)
+//    nextP5 = server(p5)
+//
+//
+//    _ <- loop(nextP1, nextP2, nextP3, nextP4, nextP5)
+//  } yield ()
+//}
+
+
+
+
