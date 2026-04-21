@@ -36,11 +36,11 @@ object Dinner extends IOApp.Simple {
 
   def tryToEat(ph: Phy, tableState: Ref[IO, List[Phy]]): IO[Boolean] = {
     tableState.modify { list =>
-      val id = ph.fd
       val isAllowed = canEat(ph, list)
 
       val newList = if (isAllowed) {
-        list.updated(id, list(id).copy(state = Eat))
+        // Идем по списку и меняем состояние только тому, чей fd совпал
+        list.map(p => if (p.fd == ph.fd) p.copy(state = Eat) else p)
       } else {
         list
       }
