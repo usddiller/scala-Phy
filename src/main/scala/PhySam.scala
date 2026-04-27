@@ -1,4 +1,3 @@
-import Dinner.{Phy, p1, p2, p3, p4, p5}
 import cats.effect.{IO, IOApp, Ref}
 import cats.syntax.all.*
 import scala.concurrent.duration.DurationInt
