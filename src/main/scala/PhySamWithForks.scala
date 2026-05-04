@@ -94,4 +94,6 @@ object DiningPhilosophersHierarchy extends IOApp.Simple {
       } yield ()).foreverM.start
       _ <- IO.never
     } yield ()
+    
+    
 }
