@@ -3,11 +3,11 @@ import cats.syntax.all._
 import scala.concurrent.duration._
 
 object DiningPhilosophersHierarchy extends IOApp.Simple {
-
+  
   case class Fork(id: Int, isTaken: Ref[IO, Boolean])
 
   case class Philosopher(id: Int, firstFork: Fork, secondFork: Fork, count: Ref[IO, Int]) {
-
+    
     def tryToEat: IO[Boolean] = {
       for {
         firstTaken <- firstFork.isTaken.modify {
@@ -94,4 +94,6 @@ object DiningPhilosophersHierarchy extends IOApp.Simple {
       } yield ()).foreverM.start
       _ <- IO.never
     } yield ()
+    
+    
 }
