@@ -5,16 +5,17 @@ import java.util.UUID
 import scala.concurrent.duration._
 import scala.util.Random
 
+
 case class Phil(id: UUID, name: String)
-case class Table(forks: Vector[Mutex[IO]],
-                 counts: Vector[Ref[IO, Int]])
+case class Table(forks: Vector[Mutex[IO]], counts: Vector[Ref[IO, Int]])
 
-object DiningPhilosophers extends IOApp.Simple {
-
+object Philosophers extends IOApp.Simple {
+  
   def eat(p: Phil, seatIndex: Int, table: Table): IO[Unit] = {
     val leftIdx = seatIndex
     val rightIdx = (seatIndex + 1) % table.forks.size
     val (first, second) = if (leftIdx < rightIdx) (leftIdx, rightIdx) else (rightIdx, leftIdx)
+
     table.forks(first).lock.use { _ =>
       table.forks(second).lock.use { _ =>
         for {
@@ -51,17 +52,14 @@ object DiningPhilosophers extends IOApp.Simple {
       table = Table(Vector(f1, f2, f3, f4, f5), Vector(c1, c2, c3, c4, c5))
 
       philosophers = List(
-        Phil(UUID.randomUUID(), "Сократ"),
-        Phil(UUID.randomUUID(), "Платон"),
-        Phil(UUID.randomUUID(), "Аристотель"),
-        Phil(UUID.randomUUID(), "Геродот"),
-        Phil(UUID.randomUUID(), "Кант")
+        Phil(UUID.randomUUID(), "Философ 1"),
+        Phil(UUID.randomUUID(), "Философ 2"),
+        Phil(UUID.randomUUID(), "Философ 3"),
+        Phil(UUID.randomUUID(), "философ 4"),
+        Phil(UUID.randomUUID(), "философ 5")
       )
 
-      _ <- philosophers.zipWithIndex.traverse { case (p, idx) =>
-        live(p, idx, table).start
-      }
-
+      _ <- philosophers.zipWithIndex.traverse{case (p, idx) => live(p, idx, table).start}
       _ <- (for {
         _ <- IO.sleep(15.seconds)
         _ <- IO.println("")
@@ -73,7 +71,6 @@ object DiningPhilosophers extends IOApp.Simple {
         }
       } yield ()).foreverM.start
       _ <- IO.never
-
 
     } yield ()
 }
